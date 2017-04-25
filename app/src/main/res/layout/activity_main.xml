@@ -10,65 +10,107 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
+<LinearLayout
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/custom_background">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
+            android:layout_gravity="center"
             android:text="Speed"
-            android:layout_gravity="center"/>
+            android:textSize="20dp" />
+
         <TextView
+            android:id="@+id/speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00.0 km/h"
+            android:textColor="@android:color/black"
+
             android:textSize="25dp"
-            android:id="@+id/speed"/>
+            />
+
+</LinearLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/custom_background">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Average Speed"
-            android:textSize="25dp"/>
+            android:textSize="20dp" />
+
         <TextView
-            android:layout_width="wrap_content"
-            android:text="00.0 km/h"
-            android:layout_height="wrap_content"
             android:id="@+id/avgSpeed"
-            android:textSize="25dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:text="00.0 km/h"
+            android:textSize="25dp" />
+            </LinearLayout>
 
-
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/custom_background">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:text="Distance"/>
+            android:text="Distance"
+            android:textSize="20dp" />
+
         <TextView
+            android:id="@+id/distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0.01km"
-            android:textSize="25dp"
-            android:id="@+id/distance"/>
+            android:text="0.00 km"
+            android:textColor="@android:color/black"
+            android:textSize="25dp" />
+</LinearLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/custom_background">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Chrono"
-            android:textSize="25dp"/>
+            android:textSize="20dp" />
+
         <Chronometer
             android:id="@+id/chrono"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"/>
+            android:textSize="25dp" />
+            </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center">
+
         <Button
-            android:layout_gravity="center"
+            android:id="@+id/start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="Start"
-            android:id="@+id/start"/>
-</LinearLayout>
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/button_shape"
+            android:textSize="50dp" />
+    </LinearLayout>
 </LinearLayout>

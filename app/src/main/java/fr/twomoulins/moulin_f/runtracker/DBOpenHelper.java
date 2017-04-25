@@ -6,10 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.location.Location;
-import android.util.Log;
-
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
@@ -66,34 +62,25 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     public Location getLastPosition(SQLiteDatabase db){
         Cursor c = db.query("Positions", new String[]{"ID", "MOMENT", "LATITUDE", "LONGITUDE", "VITESSE"}, null, null, null, null, "ID DESC", "1");
-        //Log.e("count", c.getCount() + "");
         if (c.getCount() <= 0)
             return null;
         c.moveToFirst();
         Location loc = new Location("test");
         loc.setLatitude(c.getDouble(2));
         loc.setLongitude(c.getDouble(3));
-        //Log.e("old lat", c.getDouble(2) + "");
         return  loc;
     }
-
 
     public ArrayList<Double> getAverageForKm(SQLiteDatabase db, float dst){
         ArrayList<Double> res = new ArrayList<>();
         int max = (int)dst/1000;
-        if (dst%1> 0){
-            max++;
-        }
-        //Log.e("MAx", max+"");
         int i = 0;
         String query;
         while (i < max){
             query = "SELECT (sum(VITESSE) / COUNT(ID)) from Positions WHERE DISTANCE >= " + i + " AND DISTANCE < "+(i+1);
-           // Log.e("Query", query +"");
             Cursor c = db.rawQuery(query, null);
             if (c.getCount() > 0){
                 c.moveToFirst();
-               // Log.e("average", c.getDouble(0)+"");
                 res.add(c.getDouble(0));
             }
             i++;

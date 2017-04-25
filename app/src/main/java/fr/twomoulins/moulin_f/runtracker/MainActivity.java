@@ -1,22 +1,19 @@
 package fr.twomoulins.moulin_f.runtracker;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.Handler;
-import android.os.Parcelable;
 import android.os.SystemClock;
-import android.support.annotation.StringDef;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.test.mock.MockPackageManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -31,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     Chronometer chronometer;
     boolean isStarded = false;
     Runnable run;
-    final Handler h = null;
     Thread t;
+    Float distance, average;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,28 +42,18 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 gpsHandle.getLocation();
                 if (gpsHandle.canGetLocation()){
-                    // Log.e("jkgkjhkjhh", "jhgjhgj");
- //                   double timeElapsed = (SystemClock.elapsedRealtime() - chronometer.getBase())/1000; // s
-                    speedtext.setText(String.valueOf(gpsHandle.CurrentSpeed)+ " km/h");
-                    double dst = gpsHandle.CurrentDistance/1000;
-                    //Log.e("initial", dst + " n " + Math.round(dst*100)/100);
-                    dstText.setText(new DecimalFormat("0.00").format(dst)+" km");
-                   // Log.e("dist", gpsHandle.CurrentDistance + "  " +Double.toString(timeElapsed));
-                    //avgtext.setText(String.valueOf((gpsHandle.CurrentDistance*3.6)/timeElapsed));
-                    avgtext.setText(String.valueOf(gpsHandle.AverageSpeed) + " km/h");
+                    speedtext.setText(new DecimalFormat("0.00").format(gpsHandle.CurrentSpeed)+ " km/h");
+                    distance = gpsHandle.CurrentDistance/1000;
+                    dstText.setText(new DecimalFormat("0.00").format(distance)+" km");
+                    average = gpsHandle.AverageSpeed;
+                    avgtext.setText(new DecimalFormat("0.00").format(average) + " km/h");
                 }
         }
         };
 
-
-
-
-
-
         try {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != MockPackageManager.PERMISSION_GRANTED) {
-
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         REQUEST_CODE_PERMISSION);
             }
@@ -88,19 +75,21 @@ public class MainActivity extends AppCompatActivity {
                     if (gpsHandle.canGetLocation()){
                         chronometer.setBase(SystemClock.elapsedRealtime());
                         chronometer.start();
-
                         updateButton();
                         displayInfos();
                     }else{
-                        //show popup
-                     //   Log.e("POP UP", "pas de GPS");
+                        popUp();
                     }
                 }else{
                     updateButton();
                     displayInfos();
                     ArrayList<Double> avgList = gpsHandle.getAverageForKm();
+                    double timeElapsed = SystemClock.elapsedRealtime() - chronometer.getBase();
                     Intent itent = new Intent(MainActivity.this, DisplayHistory.class);
                     itent.putExtra("avgList", avgList);
+                    itent.putExtra("average", average);
+                    itent.putExtra("distance", distance);
+                    itent.putExtra("chrono", timeElapsed);
                     startActivity(itent);
                 }
             }
@@ -110,31 +99,30 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateButton(){
         if (isStarded){
-           // Log.e("update", "start");
             startButton.setText("Start");
             isStarded = false;
 
-            //Intent itent = new Intent(MainActivity.this, DisplayHistory.class);
-            //Parcelable
-            //itent.putExtra("GPS", gpsHandle);
-            //startActivity(itent);
-
         }else{
             isStarded = true;
-          //  Log.e("update", "stop");
-
             startButton.setText("Stop");
         }
     }
 
+    private void popUp(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
 
+            }
+        });
+        builder.setTitle("Run tracker can't get your position");
+        AlertDialog dialog = builder.create();
+        dialog.setMessage("Please enable your position or your network and press again start button");
+        dialog.show();
+    }
 
     private void displayInfos(){
-        final int delay = 1000; //milliseconds
-
-       // Log.e("display", "main");
         if (isStarded){
-          //  Log.e("display", "start");
             t = new Thread() {
 
                 @Override
@@ -149,13 +137,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
                 t.start();
-
         }else{
-          //  Log.e("display", "stop!!!!!!!");
-
             chronometer.stop();
             t.interrupt();
         }
     }
-
 }
