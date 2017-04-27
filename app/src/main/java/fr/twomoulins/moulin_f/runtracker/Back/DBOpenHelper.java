@@ -1,4 +1,4 @@
-package fr.twomoulins.moulin_f.runtracker;
+package fr.twomoulins.moulin_f.runtracker.Back;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -27,7 +27,6 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     public DBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
-
     }
 
     public void onCreate(SQLiteDatabase db) { // create the database

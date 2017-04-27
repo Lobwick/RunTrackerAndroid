@@ -1,4 +1,4 @@
-package fr.twomoulins.moulin_f.runtracker;
+package fr.twomoulins.moulin_f.runtracker.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.util.Log;
 import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+
+import fr.twomoulins.moulin_f.runtracker.Back.CustomView;
+import fr.twomoulins.moulin_f.runtracker.R;
 
 /**
  * Created by moulin_f on 24/04/2017.
@@ -36,18 +39,16 @@ public class DisplayHistory extends AppCompatActivity {
 
         Intent intent = getIntent();
         ArrayList<Double> avgList = (ArrayList<Double>) intent.getExtras().getSerializable("avgList");
-        avgtext.setText(new DecimalFormat("0.00").format(intent.getFloatExtra("average", 0))+ " km/h");
-        dstText.setText(new DecimalFormat("0.00").format(intent.getFloatExtra("distance", 0))+ "km");
 
         tmp = intent.getDoubleExtra("chrono", 0);
         tmp = tmp / 1000;
-        Log.e("tmp s1", String.valueOf(tmp));
         h = (int)(tmp / 3600);
-        Log.e("h", String.valueOf(h));
         tmp = tmp % 3600;
         m = (int)(tmp / 60);
         tmp = tmp % 60;
         chrono.setText(h + ":" + m + ":" + (int)tmp);
+        avgtext.setText(new DecimalFormat("0.00").format(intent.getFloatExtra("average", 0))+ " km/h");
+        dstText.setText(new DecimalFormat("0.00").format(intent.getFloatExtra("distance", 0))+ "km");
 
         if ( avgList != null && avgList.size() > 0){
             customView =(CustomView) findViewById(R.id.Customview);

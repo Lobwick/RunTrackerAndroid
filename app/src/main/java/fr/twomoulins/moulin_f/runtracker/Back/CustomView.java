@@ -1,4 +1,4 @@
-package fr.twomoulins.moulin_f.runtracker;
+package fr.twomoulins.moulin_f.runtracker.Back;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
 import java.util.ArrayList;
+
+import fr.twomoulins.moulin_f.runtracker.Activity.DisplayHistory;
 
 /**
  * Created by moulin_f on 24/04/2017.

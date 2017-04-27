@@ -1,4 +1,4 @@
-package fr.twomoulins.moulin_f.runtracker;
+package fr.twomoulins.moulin_f.runtracker.Activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -16,6 +16,9 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+
+import fr.twomoulins.moulin_f.runtracker.Back.GpsHandle;
+import fr.twomoulins.moulin_f.runtracker.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -110,14 +113,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void popUp(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("DISMISS", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
             }
         });
         builder.setTitle("Run tracker can't get your position");
         AlertDialog dialog = builder.create();
-        dialog.setMessage("Please enable your position or your network and press again start button");
+        dialog.setMessage("Please check if  your position or your network is available and press again start button");
         dialog.show();
     }
 

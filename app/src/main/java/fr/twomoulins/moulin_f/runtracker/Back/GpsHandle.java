@@ -1,4 +1,4 @@
-package fr.twomoulins.moulin_f.runtracker;
+package fr.twomoulins.moulin_f.runtracker.Back;
 
 import android.Manifest;
 import android.app.Service;
@@ -24,7 +24,6 @@ public class GpsHandle extends Service implements LocationListener {
     public float CurrentSpeed;
     public float CurrentDistance;
     public float AverageSpeed;
-    public Timer ElaspseedTime;
     private DBOpenHelper DBopenHelper;
     private SQLiteDatabase sqLiteDatabase;
 
@@ -43,7 +42,6 @@ public class GpsHandle extends Service implements LocationListener {
         CurrentSpeed = 0.0f;
         CurrentDistance = 0.0f;
         AverageSpeed = 0.0f;
-        ElaspseedTime = new Timer();
 
         DBopenHelper = new DBOpenHelper(mContext, "positions.db", null, 1);
         sqLiteDatabase = DBopenHelper.getWritableDatabase();
